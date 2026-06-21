@@ -25,22 +25,24 @@ step.
 
 ## Quick install
 
-Clone the skill straight into your Claude Code skills directory:
+**As a Claude Code plugin (recommended)** — run inside Claude Code:
 
-**macOS / Linux / Git Bash**
+```
+/plugin marketplace add Bakoware/claude-dependency-mapper
+/plugin install claude-dependency-mapper@bakoware
+```
+
+You get managed updates (`/plugin marketplace update`) and discovery from the CLI.
+
+**As a plain skill (no plugin system)** — clone and run the installer:
 
 ```bash
-git clone https://github.com/Bakoware/claude-dependency-mapper.git ~/.claude/skills/claude-dependency-mapper
+git clone https://github.com/Bakoware/claude-dependency-mapper.git
+cd claude-dependency-mapper && ./install.sh          # Windows: ./install.ps1
 ```
 
-**Windows PowerShell**
-
-```powershell
-git clone https://github.com/Bakoware/claude-dependency-mapper.git "$HOME\.claude\skills\claude-dependency-mapper"
-```
-
-Then run `/claude-dependency-mapper` in any project. See [Installation](#installation) for
-manual/download and per-project options.
+Either way, run `/claude-dependency-mapper` in any project afterwards. See
+[Installation](#installation) for download and per-project options.
 
 ---
 
@@ -81,52 +83,46 @@ duplicates them, and existing hooks/settings are preserved.
 
 ## Installation
 
-The skill is just a folder that lives in your Claude Code **skills directory**:
+### Option A — plugin (recommended)
 
-- macOS / Linux: `~/.claude/skills/`
-- Windows: `%USERPROFILE%\.claude\skills\`
+This repo is also a [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces).
+Inside Claude Code:
 
-### Option A — one command (recommended)
+```
+/plugin marketplace add Bakoware/claude-dependency-mapper
+/plugin install claude-dependency-mapper@bakoware
+```
 
-**macOS / Linux / Git Bash:**
+You get CLI discovery and managed updates (refresh the catalog with
+`/plugin marketplace update`).
+
+### Option B — plain skill via installer
+
+Clone the repo and run the installer; it copies the skill into your Claude Code skills
+directory (`~/.claude/skills/` on macOS/Linux, `%USERPROFILE%\.claude\skills\` on Windows):
 
 ```bash
-git clone https://github.com/Bakoware/claude-dependency-mapper.git \
-  ~/.claude/skills/claude-dependency-mapper
+git clone https://github.com/Bakoware/claude-dependency-mapper.git
+cd claude-dependency-mapper
+./install.sh        # macOS / Linux / Git Bash
+./install.ps1       # Windows PowerShell
 ```
 
-**Windows PowerShell:**
+### Option C — manual install (download)
 
-```powershell
-git clone https://github.com/Bakoware/claude-dependency-mapper.git "$HOME\.claude\skills\claude-dependency-mapper"
-```
-
-That's it — Claude Code discovers the skill automatically. (If a session was already
-open, start a new one.)
-
-### Option B — manual install (download)
-
-1. On the repo page, click **Code → Download ZIP**.
-2. Extract it. GitHub names the folder `claude-dependency-mapper-main`.
-3. Rename it to `claude-dependency-mapper` and move it into your skills directory so the
-   final path is:
+1. On the repo page, click **Code → Download ZIP** and extract it.
+2. Copy the inner `skills/claude-dependency-mapper/` folder into your skills directory so
+   the final path is:
    - macOS / Linux: `~/.claude/skills/claude-dependency-mapper/SKILL.md`
    - Windows: `%USERPROFILE%\.claude\skills\claude-dependency-mapper\SKILL.md`
 
-There are also helper scripts if you cloned/extracted to a temporary location — run from
-inside the repo folder:
-
-```bash
-./install.sh          # macOS / Linux / Git Bash
-```
-```powershell
-./install.ps1         # Windows PowerShell
-```
+After any of these, Claude Code discovers the skill automatically (start a new session if
+one was already open).
 
 ### Per-project install
 
-If you want the skill only in one project (not globally), put the folder under that
-project's `.claude/skills/` directory instead of your home directory.
+To use it in only one project (not globally), copy `skills/claude-dependency-mapper/`
+into that project's `.claude/skills/` directory instead.
 
 ---
 

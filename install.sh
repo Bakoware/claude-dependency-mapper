@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Installs the claude-dependency-mapper skill into your Claude Code skills directory.
-# Run from inside the cloned/extracted repo folder:  ./install.sh
+# Installs the claude-dependency-mapper skill into your Claude Code skills directory
+# (without using the plugin system). Run from inside the cloned/extracted repo:  ./install.sh
 set -e
-SRC="$(cd "$(dirname "$0")" && pwd)"
+SRC="$(cd "$(dirname "$0")" && pwd)/skills/claude-dependency-mapper"
 DEST="${HOME}/.claude/skills/claude-dependency-mapper"
 mkdir -p "$DEST"
 cp "$SRC/SKILL.md" "$SRC/gen-graph.mjs" "$DEST/"

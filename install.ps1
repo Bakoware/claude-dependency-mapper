@@ -1,7 +1,7 @@
-# Installs the claude-dependency-mapper skill into your Claude Code skills directory.
-# Run from inside the cloned/extracted repo folder:  ./install.ps1
+# Installs the claude-dependency-mapper skill into your Claude Code skills directory
+# (without using the plugin system). Run from inside the cloned/extracted repo:  ./install.ps1
 $ErrorActionPreference = 'Stop'
-$src  = Split-Path -Parent $MyInvocation.MyCommand.Path
+$src  = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'skills\claude-dependency-mapper'
 $dest = Join-Path $HOME '.claude\skills\claude-dependency-mapper'
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 Copy-Item (Join-Path $src 'SKILL.md')      $dest -Force
