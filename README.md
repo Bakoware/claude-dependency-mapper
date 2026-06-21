@@ -20,6 +20,27 @@ step.
 
 ---
 
+## Quick install
+
+Clone the skill straight into your Claude Code skills directory:
+
+**macOS / Linux / Git Bash**
+
+```bash
+git clone https://github.com/Bakoware/claude-dependency-mapper.git ~/.claude/skills/claude-dependency-mapper
+```
+
+**Windows PowerShell**
+
+```powershell
+git clone https://github.com/Bakoware/claude-dependency-mapper.git "$HOME\.claude\skills\claude-dependency-mapper"
+```
+
+Then run `/claude-dependency-mapper` in any project. See [Installation](#installation) for
+manual/download and per-project options.
+
+---
+
 ## How it works
 
 When you run `/claude-dependency-mapper` in a project, the skill:
