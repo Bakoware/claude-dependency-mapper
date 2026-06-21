@@ -1,5 +1,8 @@
 # claude-dependency-mapper
 
+[![Latest release](https://img.shields.io/github/v/release/Bakoware/claude-dependency-mapper?label=release)](https://github.com/Bakoware/claude-dependency-mapper/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 A [Claude Code](https://claude.com/claude-code) skill that maps your project's
 dependency graph into two complementary artifacts from a single static-import analysis:
 
