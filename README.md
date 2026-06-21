@@ -18,8 +18,10 @@ It also wires up `.gitignore` and `CLAUDE.md`, and installs a hook that **auto-r
 the graphs whenever you edit source files** — so both views stay current with no manual
 step.
 
-> Works on JavaScript/TypeScript-family projects
-> (`.ts .tsx .js .jsx .mjs .cjs .mts .cts .vue .svelte .astro`).
+> **Languages** (auto-detected by extension): JavaScript/TypeScript
+> (`.ts .tsx .js .jsx .mjs .cjs .mts .cts .vue .svelte .astro`), Python (`.py .pyi`),
+> Rust (`.rs`), and Dart (`.dart`). Resolution is best-effort and regex-based — see
+> [Limitations](#limitations).
 
 ---
 
@@ -65,7 +67,7 @@ When you run `/claude-dependency-mapper` in a project, the skill:
 
 1. Finds the source base (`src/` if present, otherwise the project root), ignoring
    `node_modules`, build output, `.git`, etc.
-2. Parses static imports (relative paths and the `@/` → source-base alias) to build the
+2. Parses static imports per language (relative paths, aliases, module paths) to build the
    dependency graph.
 3. **Picks a route by code-file count:**
    - **`< 40` files → "directed":** the project is small enough that Claude's normal
@@ -89,7 +91,7 @@ duplicates them, and existing hooks/settings are preserved.
 - [Claude Code](https://claude.com/claude-code)
 - [Node.js](https://nodejs.org) 18+ (the generator is a single `.mjs` script, no
   dependencies)
-- A JS/TS-family project
+- A project in a supported language (JavaScript/TypeScript, Python, Rust, or Dart)
 - *(Optional)* [Obsidian](https://obsidian.md) to view the human graph
 
 ---
@@ -174,7 +176,7 @@ into that project's `.claude/skills/` directory instead.
 
 ## Usage
 
-Inside any JS/TS project, run:
+Inside any supported project, run:
 
 ```
 /claude-dependency-mapper
@@ -252,10 +254,22 @@ node gen-graph.mjs [projectRoot] [--threshold=40] [--route=directed|compact]
 
 ## Limitations
 
-- Resolves relative imports and the `@/` → source-base alias. Other `tsconfig` `paths`
+Resolution is regex-based and zero-dependency (no compiler or language server), so it is
+great for visualization but not a perfectly accurate graph. Per language:
+
+- **JS/TS:** relative imports and the `@/` → source-base alias. Other `tsconfig` `paths`
   aliases and dynamically string-built imports are not resolved.
-- JS/TS-family files only.
-- The graph reflects **static import** structure, not runtime relationships.
+- **Python:** relative (`from . import`) and absolute (`import a.b.c`) imports resolved
+  against the project root and `src/`. Third-party/stdlib modules show as external nodes.
+- **Rust:** `mod name;` gives accurate file edges; `use crate::/self::/super::` are
+  resolved best-effort (trailing item dropped); other `use` paths are external crates.
+  Grouped `use a::{b, c}` is not expanded.
+- **Dart:** relative imports and `package:<self>/…` (via `pubspec.yaml` name) become edges;
+  `dart:` and third-party `package:` imports are external.
+
+Imports that don't resolve to a project file are listed under **"Sin resolver"** in the
+Obsidian note and excluded from the graph edges. The graph reflects **static import**
+structure, not runtime relationships.
 
 ---
 

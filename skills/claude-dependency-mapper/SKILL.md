@@ -26,10 +26,17 @@ The Obsidian human vault is generated in **both** cases.
 
 ## Procedure
 
-1. Confirm Node.js is available (`node --version`). The script targets JS/TS-family
-   projects (`.ts .tsx .js .jsx .mjs .cjs .mts .cts .vue .svelte .astro`). If the
-   project is another language, tell the user this skill currently parses JS/TS imports
-   and stop.
+1. Confirm Node.js is available (`node --version`). The script (Node, zero-dependency)
+   parses imports for several languages — detected automatically by file extension:
+   - **JavaScript/TypeScript** (`.ts .tsx .js .jsx .mjs .cjs .mts .cts .vue .svelte .astro`)
+   - **Python** (`.py .pyi`)
+   - **Rust** (`.rs`)
+   - **Dart** (`.dart`)
+
+   Resolution is best-effort and regex-based (no compiler/LSP), so it's great for
+   visualization but not a perfectly accurate graph — see Notes/limitations. If the
+   project is in another language, tell the user it isn't parsed yet (adding one means
+   adding an entry to the `LANGS` registry in `gen-graph.mjs`).
 
 2. Run the generator against the current project (it does everything and is idempotent):
 
@@ -82,8 +89,20 @@ hook entries are removed first), and other existing hooks in `settings.json` are
 
 ## Notes / limitations
 
-- Import resolution covers relative paths and the `@/` → source-base alias. Other
-  tsconfig `paths` aliases and dynamic string-built imports are not resolved.
-- Both graphs are gitignored by design (the user does not want them committed). If the
-  user later wants `PROJECT_MAP.md` shared with a team, remove it from the managed
-  `.gitignore` block.
+- The whole project tree is scanned (minus `node_modules`, build dirs, `.git`, virtual
+  envs, `target`, etc.); note ids are paths relative to the project root.
+- Resolution is regex-based and best-effort per language:
+  - **JS/TS:** relative paths + `@/` → source-base alias. Other tsconfig `paths` aliases
+    and dynamically string-built imports are not resolved.
+  - **Python:** relative (`from . / .. import`) and absolute (`import a.b.c`,
+    `from a.b import x`) resolved against the project root and `src/`. Star/`as` ignored;
+    third-party/stdlib modules appear as external nodes.
+  - **Rust:** `mod name;` declarations give accurate file edges; `use crate::/self::/super::`
+    are resolved best-effort to files (the trailing item name is dropped), other `use`
+    paths are treated as external crates. Grouped `use a::{b, c}` edges are not expanded.
+  - **Dart:** relative imports and `package:<self>/…` (resolved via `pubspec.yaml` name)
+    become edges; `dart:` and other `package:` imports are external.
+- Imports that don't resolve to a file in the project are listed under "Sin resolver" in
+  the Obsidian note (kept out of the graph edges).
+- Both graphs are gitignored by design. If the user later wants `PROJECT_MAP.md` shared
+  with a team, remove it from the managed `.gitignore` block.
