@@ -34,15 +34,28 @@ step.
 
 You get managed updates (`/plugin marketplace update`) and discovery from the CLI.
 
-**As a plain skill (no plugin system)** — clone and run the installer:
+**As a plain skill (no plugin system)** — one command, no script:
+
+*macOS / Linux:*
 
 ```bash
-git clone https://github.com/Bakoware/claude-dependency-mapper.git
-cd claude-dependency-mapper && ./install.sh          # Windows: ./install.ps1
+git clone --depth 1 https://github.com/Bakoware/claude-dependency-mapper.git /tmp/cdm \
+  && mkdir -p ~/.claude/skills \
+  && cp -r /tmp/cdm/skills/claude-dependency-mapper ~/.claude/skills/ \
+  && rm -rf /tmp/cdm
+```
+
+*Windows PowerShell:*
+
+```powershell
+git clone --depth 1 https://github.com/Bakoware/claude-dependency-mapper.git "$env:TEMP\cdm"; `
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; `
+Copy-Item -Recurse -Force "$env:TEMP\cdm\skills\claude-dependency-mapper" "$HOME\.claude\skills\"; `
+Remove-Item -Recurse -Force "$env:TEMP\cdm"
 ```
 
 Either way, run `/claude-dependency-mapper` in any project afterwards. See
-[Installation](#installation) for download and per-project options.
+[Installation](#installation) for the installer script, download, and per-project options.
 
 ---
 
@@ -96,19 +109,52 @@ Inside Claude Code:
 You get CLI discovery and managed updates (refresh the catalog with
 `/plugin marketplace update`).
 
-### Option B — plain skill via installer
+> The options below install it as a plain skill (no plugin system). The skill lives in
+> your Claude Code skills directory:
+> `~/.claude/skills/` on **macOS** and **Linux**, `%USERPROFILE%\.claude\skills\` on
+> **Windows**.
 
-Clone the repo and run the installer; it copies the skill into your Claude Code skills
-directory (`~/.claude/skills/` on macOS/Linux, `%USERPROFILE%\.claude\skills\` on Windows):
+### Option B — one-line clone (no plugin, no script)
+
+**macOS:**
+
+```bash
+git clone --depth 1 https://github.com/Bakoware/claude-dependency-mapper.git /tmp/cdm \
+  && mkdir -p ~/.claude/skills \
+  && cp -r /tmp/cdm/skills/claude-dependency-mapper ~/.claude/skills/ \
+  && rm -rf /tmp/cdm
+```
+
+**Linux:** identical to macOS (bash/zsh) — same command works as-is:
+
+```bash
+git clone --depth 1 https://github.com/Bakoware/claude-dependency-mapper.git /tmp/cdm \
+  && mkdir -p ~/.claude/skills \
+  && cp -r /tmp/cdm/skills/claude-dependency-mapper ~/.claude/skills/ \
+  && rm -rf /tmp/cdm
+```
+
+**Windows PowerShell:**
+
+```powershell
+git clone --depth 1 https://github.com/Bakoware/claude-dependency-mapper.git "$env:TEMP\cdm"; `
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; `
+Copy-Item -Recurse -Force "$env:TEMP\cdm\skills\claude-dependency-mapper" "$HOME\.claude\skills\"; `
+Remove-Item -Recurse -Force "$env:TEMP\cdm"
+```
+
+### Option C — clone and run the installer
+
+The installer copies the skill into your skills directory for you:
 
 ```bash
 git clone https://github.com/Bakoware/claude-dependency-mapper.git
 cd claude-dependency-mapper
-./install.sh        # macOS / Linux / Git Bash
+./install.sh        # macOS / Linux
 ./install.ps1       # Windows PowerShell
 ```
 
-### Option C — manual install (download)
+### Option D — manual install (download)
 
 1. On the repo page, click **Code → Download ZIP** and extract it.
 2. Copy the inner `skills/claude-dependency-mapper/` folder into your skills directory so
