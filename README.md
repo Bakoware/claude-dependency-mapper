@@ -62,21 +62,19 @@ The skill is just a folder that lives in your Claude Code **skills directory**:
 - macOS / Linux: `~/.claude/skills/`
 - Windows: `%USERPROFILE%\.claude\skills\`
 
-> Replace `YOUR_GITHUB_USERNAME` below with your GitHub handle.
-
 ### Option A — one command (recommended)
 
 **macOS / Linux / Git Bash:**
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/claude-dependency-mapper.git \
+git clone https://github.com/Bakoware/claude-dependency-mapper.git \
   ~/.claude/skills/claude-dependency-mapper
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-git clone https://github.com/YOUR_GITHUB_USERNAME/claude-dependency-mapper.git "$HOME\.claude\skills\claude-dependency-mapper"
+git clone https://github.com/Bakoware/claude-dependency-mapper.git "$HOME\.claude\skills\claude-dependency-mapper"
 ```
 
 That's it — Claude Code discovers the skill automatically. (If a session was already
@@ -195,6 +193,10 @@ node gen-graph.mjs [projectRoot] [--threshold=40] [--route=directed|compact]
 
 ---
 
+## Author
+
+Made by **Bakoware** — [github.com/Bakoware](https://github.com/Bakoware)
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](./LICENSE) © Bakoware
