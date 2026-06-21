@@ -1,0 +1,56 @@
+{
+  "small": {
+    "nfiles": 13,
+    "map_tok": 172,
+    "real_map": false,
+    "hub": {
+      "target": "src/m0",
+      "blast": 12,
+      "calls": 13,
+      "best_tok": 299,
+      "real_tok": 17761
+    },
+    "mean": {
+      "blast": 3.4,
+      "calls": 4.4,
+      "best_tok": 62.4,
+      "real_tok": 4140.8
+    }
+  },
+  "medium": {
+    "nfiles": 51,
+    "map_tok": 692,
+    "real_map": true,
+    "hub": {
+      "target": "src/m0",
+      "blast": 50,
+      "calls": 51,
+      "best_tok": 1098,
+      "real_tok": 79227
+    },
+    "mean": {
+      "blast": 8.1,
+      "calls": 9.1,
+      "best_tok": 132.1,
+      "real_tok": 12441.9
+    }
+  },
+  "large": {
+    "nfiles": 151,
+    "map_tok": 2009,
+    "real_map": true,
+    "hub": {
+      "target": "src/m0",
+      "blast": 150,
+      "calls": 151,
+      "best_tok": 3337,
+      "real_tok": 242126
+    },
+    "mean": {
+      "blast": 15.5,
+      "calls": 16.5,
+      "best_tok": 255.7,
+      "real_tok": 24632.0
+    }
+  }
+}

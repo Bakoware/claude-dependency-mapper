@@ -2,3 +2,8 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Python / benchmark reproduction output (regenerable)
+__pycache__/
+*.pyc
+skills/claude-dependency-mapper/benchmark/_projects/

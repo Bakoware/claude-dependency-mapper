@@ -102,7 +102,7 @@ hook entries are removed first), and other existing hooks in `settings.json` are
     paths are treated as external crates. Grouped `use a::{b, c}` edges are not expanded.
   - **Dart:** relative imports and `package:<self>/…` (resolved via `pubspec.yaml` name)
     become edges; `dart:` and other `package:` imports are external.
-- Imports that don't resolve to a file in the project are listed under "Sin resolver" in
+- Imports that don't resolve to a file in the project are listed under "Unresolved" in
   the Obsidian note (kept out of the graph edges).
 - Both graphs are gitignored by design. If the user later wants `PROJECT_MAP.md` shared
   with a team, remove it from the managed `.gitignore` block.

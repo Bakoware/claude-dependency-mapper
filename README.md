@@ -25,6 +25,19 @@ step.
 
 ---
 
+## 📊 Token savings — measured, not claimed
+
+The index turns a multi-call recursive search into a **single read**. On a transitive
+blast-radius query it cut tokens **~12–18× on a typical question and up to ~120× on big
+refactors**, and tool calls from *one-per-affected-file* down to **1**:
+
+![Token savings with the PROJECT_MAP index](skills/claude-dependency-mapper/benchmark/assets/fig_token_savings.png)
+
+Full reproducible methodology, charts, and an independent real-agent validation:
+**[benchmark/README.md »](skills/claude-dependency-mapper/benchmark/README.md)**
+
+---
+
 ## Quick install
 
 **As a Claude Code plugin (recommended)** — run inside Claude Code:

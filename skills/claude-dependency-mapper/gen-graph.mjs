@@ -357,19 +357,19 @@ function main() {
     const L = ['---', `lang: ${n.lang}`, `type: ${tag}`,
       `file: ${posix(path.relative(ROOT, n.file))}`,
       `tags: [${tag}, ${n.lang}]`, '---', '', `# ${path.basename(n.id)}`, '',
-      '## Importa (depende de)',
-      deps.length ? deps.map(d => `- [[${d}]]`).join('\n') : '_(ninguno interno)_', '',
-      '## Usado por',
-      usedBy.length ? usedBy.map(d => `- [[${d}]]`).join('\n') : '_(nadie lo importa)_', ''];
-    if (ext.length) L.push('## Paquetes externos', ext.map(e => `- \`${e}\``).join('\n'), '');
-    if (n.unresolved.length) L.push('## Sin resolver', n.unresolved.map(e => `- \`${e}\``).join('\n'), '');
+      '## Imports (depends on)',
+      deps.length ? deps.map(d => `- [[${d}]]`).join('\n') : '_(none internal)_', '',
+      '## Used by',
+      usedBy.length ? usedBy.map(d => `- [[${d}]]`).join('\n') : '_(no importers)_', ''];
+    if (ext.length) L.push('## External packages', ext.map(e => `- \`${e}\``).join('\n'), '');
+    if (n.unresolved.length) L.push('## Unresolved', n.unresolved.map(e => `- \`${e}\``).join('\n'), '');
     writeNote(n.id, L.join('\n'));
   }
   const byType = {};
   for (const n of nodes) (byType[folderTag(n.id, n.lang)] ??= []).push(n.id);
-  const idx = ['# ' + path.basename(ROOT) + ' — Grafo de dependencias', '',
-    `> Auto-generado. ${nodes.length} archivos (${Object.entries(langCounts).map(([k, v]) => `${k}:${v}`).join(', ')}). Ruta IA: ${route}.`, '',
-    'Abre esta carpeta como *vault* en Obsidian y pulsa **Ctrl/Cmd+G** (Graph View).', ''];
+  const idx = ['# ' + path.basename(ROOT) + ' — Dependency graph', '',
+    `> Auto-generated. ${nodes.length} files (${Object.entries(langCounts).map(([k, v]) => `${k}:${v}`).join(', ')}). AI route: ${route}.`, '',
+    'Open this folder as a *vault* in Obsidian and press **Ctrl/Cmd+G** (Graph View).', ''];
   for (const t of Object.keys(byType).sort()) {
     idx.push(`## ${t} (${byType[t].length})`, byType[t].sort().map(id => `- [[${id}]]`).join('\n'), '');
   }
@@ -408,10 +408,13 @@ function main() {
     const claudeBody = route === 'compact'
       ? ['## Codebase navigation (managed by /claude-dependency-mapper)', '',
         `This project has a precomputed dependency index at \`PROJECT_MAP.md\` (${nodes.length} files).`,
-        "Read it **before** fanning out with Grep/Glob: each line lists a file's imports (`imp:`)",
-        "and its dependents (`by:`), so you can find the relevant files and a change's blast radius",
-        'cheaply. It is auto-refreshed on source edits. The map is gitignored.', '',
-        'A human-facing Obsidian graph also exists in `obsidian-graph/` (gitignored).'].join('\n')
+        "Each line lists a file's imports (`imp:`) and its dependents (`by:`).", '',
+        'Pick the token-cheapest tool for the task at hand:',
+        '- Structural / blast-radius / "what depends on X" / multi-file change → read `PROJECT_MAP.md`',
+        '  first; one read resolves the whole graph (far cheaper and more accurate than recursive Grep).',
+        '- Single targeted lookup of one symbol or string → Grep directly and skip the map.', '',
+        'It is auto-refreshed on source edits and gitignored. A human-facing Obsidian graph also',
+        'exists in `obsidian-graph/` (gitignored).'].join('\n')
       : ['## Codebase navigation (managed by /claude-dependency-mapper)', '',
         `Small project (${nodes.length} source files) — directed exploration (Grep/Glob/Read) is cheap`,
         'enough, so no static dependency map is maintained. A human-facing Obsidian graph exists in',

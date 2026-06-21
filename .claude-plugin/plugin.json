@@ -1,7 +1,7 @@
 {
   "name": "claude-dependency-mapper",
   "description": "Maps a project's dependency graph (JS/TS, Python, Rust, Dart): an Obsidian vault for humans and a compact PROJECT_MAP.md for token-efficient AI navigation, with an auto-refresh hook.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "Bakoware"
   },
